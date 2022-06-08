@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -29,6 +29,7 @@ import {
 
 const Section: React.FC<{
   title: string;
+  children: ReactNode;
 }> = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -74,7 +75,7 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            www Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
           <Section title="See Your Changes">
