@@ -9,31 +9,18 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import SplashScreen from './src/SplashScreen';
 
 const App = () => {
   return (
     <SafeAreaView>
       <StatusBar barStyle="light-content" />
-
-      <View style={styles.mainContainer}>
-        <Text style={styles.text}>PhotoBook</Text>
-      </View>
+      <SplashScreen />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    height: '100%',
-  },
-  text: {
-    fontSize: 50,
-    fontWeight: 'bold',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
