@@ -9,19 +9,23 @@
  */
 
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import SplashScreen from './src/SplashScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './src/HomeScreen';
+import React, {useEffect, useState} from 'react';
+import {StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {RootStackParamList} from './src/navigation';
+import HomeScreen from './src/screens/HomeScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import SplashScreen from './src/screens/SplashScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   console.log('setIsLoading: ', setIsLoading);
   console.log('isLoading: ', isLoading);
+
+  const isConnected = false;
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,8 +41,9 @@ const App = () => {
           <SplashScreen />
         ) : (
           <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName={isConnected ? 'Home' : 'Login'}>
               <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         )}
