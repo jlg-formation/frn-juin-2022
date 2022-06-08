@@ -8,10 +8,15 @@
  * @format
  */
 
+import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-import HomeScreen from './src/HomeScreen';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import SplashScreen from './src/SplashScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import HomeScreen from './src/HomeScreen';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,13 +30,27 @@ const App = () => {
   }, []);
 
   return (
-    <SafeAreaView>
-      <StatusBar barStyle="light-content" />
-      {isLoading ? <SplashScreen /> : <HomeScreen />}
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeAreaView}>
+        <StatusBar barStyle="light-content" />
+        {isLoading ? (
+          <SplashScreen />
+        ) : (
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Home" component={HomeScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        )}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
+});
 
 export default App;
