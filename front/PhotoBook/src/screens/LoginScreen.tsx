@@ -1,6 +1,14 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import api, {LoginForm} from '../api';
 import {RootStackParamList} from '../navigation';
 import {useAppDispatch, useAppSelector} from '../redux/hooks';
 import {
@@ -18,13 +26,25 @@ const LoginScreen = ({navigation}: LoginProps) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const onPress = () => {
     console.log('coucou');
-    const user: User = {
-      displayName: 'toto',
-    };
-    dispatch(connect(user));
-    navigation.navigate('Home');
+
+    (async () => {
+      try {
+        setIsLoading(true);
+        const user = await api.connect({login, password});
+        dispatch(connect(user));
+        navigation.navigate('Home');
+      } catch (err) {
+        console.log('err: ', err);
+        setErrorMsg('Bad login');
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   };
 
   return (
@@ -46,7 +66,12 @@ const LoginScreen = ({navigation}: LoginProps) => {
           defaultValue={''}
           secureTextEntry
         />
-        <Button title="Connect" onPress={onPress} />
+        <Text style={styles.error}>{errorMsg}</Text>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button title="Connect" onPress={onPress} />
+        )}
       </View>
     </View>
   );
@@ -62,7 +87,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   form: {
-    height: 200,
+    height: 400,
     alignItems: 'stretch',
     justifyContent: 'space-between',
     backgroundColor: 'white',
@@ -75,5 +100,11 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     borderRadius: 5,
+  },
+  error: {
+    color: 'red',
+    fontWeight: 'bold',
+    height: 30,
+    textAlign: 'center',
   },
 });
