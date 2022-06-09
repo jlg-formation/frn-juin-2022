@@ -51,8 +51,6 @@ const LoginScreen = ({navigation}: LoginProps) => {
     <View style={styles.mainContainer}>
       <Text style={styles.text}>Login</Text>
       <View style={styles.form}>
-        <Text>{login}</Text>
-        <Text>{password}</Text>
         <TextInput
           style={styles.textInput}
           placeholder="Ex: toto"
