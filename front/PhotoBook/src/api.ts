@@ -24,6 +24,24 @@ class Api {
     const user: User = await response.json();
     return user;
   }
+
+  async disconnect() {
+    fetch('http://localhost:3000/api/disconnect', {
+      method: 'POST',
+    });
+  }
+
+  async isConnected(): Promise<User | undefined> {
+    await sleep(2000);
+    const response = await fetch('http://localhost:3000/api/is-connected');
+    const status = response.status;
+    console.log('check status: ', status);
+    if (status !== 200) {
+      return undefined;
+    }
+    const user = await response.json();
+    return user;
+  }
 }
 
 const api = new Api();

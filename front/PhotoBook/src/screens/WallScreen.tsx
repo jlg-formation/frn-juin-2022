@@ -7,7 +7,7 @@ const WallScreen = () => {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.text}>Wall</Text>
-      <Icon name="rowing" />
+      <Icon name="wallpaper" />
     </View>
   );
 };

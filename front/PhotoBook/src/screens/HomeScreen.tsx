@@ -29,9 +29,33 @@ const HomeScreen = ({navigation}: HomeProps) => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen name="Wall" component={WallScreen} />
-      <Tab.Screen name="Legal" component={LegalScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen
+        name="Wall"
+        component={WallScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Legal"
+        component={LegalScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="policy" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="settings" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
