@@ -67,11 +67,13 @@ const LoginScreen = ({navigation}: LoginProps) => {
           secureTextEntry
         />
         <Text style={styles.error}>{errorMsg}</Text>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Button title="Connect" onPress={onPress} />
-        )}
+        <View style={styles.buttonContainer}>
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Button title="Connect" onPress={onPress} />
+          )}
+        </View>
       </View>
     </View>
   );
@@ -106,5 +108,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     height: 30,
     textAlign: 'center',
+  },
+  buttonContainer: {
+    height: 60,
   },
 });
