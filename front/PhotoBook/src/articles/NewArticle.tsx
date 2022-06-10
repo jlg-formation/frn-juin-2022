@@ -1,21 +1,36 @@
 import React, {useState} from 'react';
-import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import {useAppDispatch} from '../redux/hooks';
-import {addNewArticle} from '../redux/slices/articles.slice';
+import {addNewArticle, fetchAllArticles} from '../redux/slices/articles.slice';
+
+const initialText = '';
 
 const NewArticle = () => {
   const dispatch = useAppDispatch();
-  const [text, setText] = useState("Hey what's up?");
+  const [text, setText] = useState(initialText);
+  const [isLoading, setIsLoading] = useState(false);
   const [images] = useState([]);
 
   const onSubmit = () => {
     (async () => {
       try {
+        setIsLoading(true);
         console.log('about to add article');
         await dispatch(addNewArticle({content: text, images: images})).unwrap();
+        setIsLoading(false);
+        await dispatch(fetchAllArticles()).unwrap();
+        console.log('fin...');
       } catch (err) {
         console.log('err: ', err);
       } finally {
+        setIsLoading(false);
+        setText(initialText);
       }
     })();
   };
@@ -24,12 +39,17 @@ const NewArticle = () => {
     <View style={styles.mainContainer}>
       <TextInput
         multiline
+        placeholder="What's up Dude?"
         numberOfLines={3}
         onChangeText={setText}
         value={text}
         style={styles.textInput}
       />
-      <Button title="Ajouter un article" onPress={onSubmit} />
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Button title="Ajouter un article" onPress={onSubmit} />
+      )}
     </View>
   );
 };

@@ -1,13 +1,28 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-
-import {Icon} from '@rneui/themed';
-import {backEndUrl} from '../env';
+import {Image, RefreshControl, ScrollView, StyleSheet} from 'react-native';
+import ArticleList from '../articles/ArticleList';
 import NewArticle from '../articles/NewArticle';
+import {backEndUrl} from '../env';
+import {useAppDispatch, useAppSelector} from '../redux/hooks';
+import {
+  fetchAllArticles,
+  selectArticleStatus,
+} from '../redux/slices/articles.slice';
 
 const WallScreen = () => {
+  const dispatch = useAppDispatch();
+  const articleStatus = useAppSelector(selectArticleStatus);
+  const onRefresh = () => {
+    dispatch(fetchAllArticles());
+  };
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={articleStatus === 'loading'}
+          onRefresh={onRefresh}
+        />
+      }>
       <Image
         style={styles.image}
         source={{
@@ -15,9 +30,8 @@ const WallScreen = () => {
         }}
       />
       <NewArticle />
-      <Text style={styles.text}>Wall</Text>
-      <Icon name="wallpaper" />
-    </View>
+      <ArticleList />
+    </ScrollView>
   );
 };
 

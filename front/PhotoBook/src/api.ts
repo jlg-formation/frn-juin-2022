@@ -13,7 +13,7 @@ const apiUrl = backEndUrl + '/api';
 
 class Api {
   async connect(loginForm: LoginForm): Promise<User> {
-    await sleep(2000);
+    await sleep(0);
     const response = await fetch(backEndUrl + '/api/connect', {
       method: 'POST',
       body: JSON.stringify(loginForm),
@@ -37,7 +37,7 @@ class Api {
   }
 
   async isConnected(): Promise<User | undefined> {
-    await sleep(2000);
+    await sleep(0);
     const response = await fetch(backEndUrl + '/api/is-connected');
     const status = response.status;
     console.log('check status: ', status);
