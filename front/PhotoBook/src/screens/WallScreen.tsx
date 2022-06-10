@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 
 import {Icon} from '@rneui/themed';
 import {backEndUrl} from '../env';
+import NewArticle from '../articles/NewArticle';
 
 const WallScreen = () => {
   return (
@@ -13,6 +14,7 @@ const WallScreen = () => {
           uri: backEndUrl + '/images/wall.jpg',
         }}
       />
+      <NewArticle />
       <Text style={styles.text}>Wall</Text>
       <Icon name="wallpaper" />
     </View>

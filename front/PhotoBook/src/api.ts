@@ -1,4 +1,6 @@
 import {backEndUrl} from './env';
+import {authFetch} from './fetch';
+import {Article} from './redux/slices/articles.slice';
 import {User} from './redux/slices/authentication.slice';
 import {sleep} from './utils';
 
@@ -6,6 +8,8 @@ export interface LoginForm {
   login: string;
   password: string;
 }
+
+const apiUrl = backEndUrl + '/api';
 
 class Api {
   async connect(loginForm: LoginForm): Promise<User> {
@@ -42,6 +46,28 @@ class Api {
     }
     const user = await response.json();
     return user;
+  }
+
+  async addNewArticle(article: Article) {
+    const url = apiUrl + '/articles';
+    console.log('url: ', url);
+
+    const response = await authFetch(url, {
+      method: 'POST',
+      body: JSON.stringify(article),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.status !== 201) {
+      throw new Error('cannot add article');
+    }
+    return await response.json();
+  }
+
+  async getArticles(): Promise<Article[]> {
+    const response = await authFetch(apiUrl + '/articles');
+    return await response.json();
   }
 }
 
