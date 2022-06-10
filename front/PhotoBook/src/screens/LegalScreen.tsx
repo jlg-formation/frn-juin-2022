@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 const LegalScreen = () => {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.text}>Legal</Text>
+      <Image style={styles.image} source={require('../../assets/legal.png')} />
     </View>
   );
 };
@@ -21,5 +22,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 50,
     fontWeight: 'bold',
+  },
+  image: {
+    width: 50,
+    height: 50,
   },
 });
