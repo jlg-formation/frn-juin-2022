@@ -1,7 +1,7 @@
 package com.photobook; // replace com.your-app-name with your app’s name
 
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -26,12 +26,12 @@ public class DeviceInfoModule extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void getUniqueId(String name, Callback callBack) {
+    public void getUniqueId(String name, Promise promise) {
         Log.d("DeviceInfoModule", "name: " + name);
         if (name.equals("zut")) {
-            callBack.invoke("et paf!");
+            promise.reject("34", "et paf!");
             return;
         }
-        callBack.invoke(null, "titi");
+        promise.resolve("titiiiiii");
     }
 }

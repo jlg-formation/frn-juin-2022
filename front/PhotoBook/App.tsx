@@ -24,21 +24,16 @@ import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SplashScreen from './src/screens/SplashScreen';
 
-const testx = () => {
-  DeviceInfoModule.getUniqueId('helllllooooooo', (err, result) => {
-    if (err) {
-      console.log('err: ', err);
-      return;
-    }
+const testx = async () => {
+  try {
+    const result = await DeviceInfoModule.getUniqueId('hellooooooo');
     console.log('result: ', result);
-  });
-  DeviceInfoModule.getUniqueId('zut', (err, result) => {
-    if (err) {
-      console.log('err: ', err);
-      return;
-    }
-    console.log('result: ', result);
-  });
+
+    const result2 = await DeviceInfoModule.getUniqueId('zut');
+    console.log('result2: ', result2);
+  } catch (err) {
+    console.log('err: ', err);
+  }
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
