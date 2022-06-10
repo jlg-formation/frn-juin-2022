@@ -9,9 +9,26 @@ export interface LoginForm {
   password: string;
 }
 
-const apiUrl = backEndUrl + '/api';
+export const apiUrl = backEndUrl + '/api';
 
 class Api {
+  async addNewArticle(article: Article) {
+    const url = apiUrl + '/articles';
+    console.log('url: ', url);
+
+    const response = await authFetch(url, {
+      method: 'POST',
+      body: JSON.stringify(article),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.status !== 201) {
+      throw new Error('cannot add article');
+    }
+    return await response.json();
+  }
+
   async connect(loginForm: LoginForm): Promise<User> {
     await sleep(0);
     const response = await fetch(backEndUrl + '/api/connect', {
@@ -36,6 +53,11 @@ class Api {
     });
   }
 
+  async getArticles(): Promise<Article[]> {
+    const response = await authFetch(apiUrl + '/articles');
+    return await response.json();
+  }
+
   async isConnected(): Promise<User | undefined> {
     await sleep(0);
     const response = await fetch(backEndUrl + '/api/is-connected');
@@ -48,26 +70,14 @@ class Api {
     return user;
   }
 
-  async addNewArticle(article: Article) {
-    const url = apiUrl + '/articles';
-    console.log('url: ', url);
-
-    const response = await authFetch(url, {
+  async upload(formData: FormData) {
+    return await authFetch(apiUrl + '/upload', {
       method: 'POST',
-      body: JSON.stringify(article),
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
+      body: formData,
     });
-    if (response.status !== 201) {
-      throw new Error('cannot add article');
-    }
-    return await response.json();
-  }
-
-  async getArticles(): Promise<Article[]> {
-    const response = await authFetch(apiUrl + '/articles');
-    return await response.json();
   }
 }
 
