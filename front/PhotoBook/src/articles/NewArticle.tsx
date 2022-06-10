@@ -2,6 +2,7 @@ import {Icon} from '@rneui/base';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
+  Image,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -34,6 +35,7 @@ const NewArticle = () => {
       } finally {
         setIsLoading(false);
         setText(initialText);
+        setImages([]);
       }
     })();
   };
@@ -87,6 +89,17 @@ const NewArticle = () => {
         value={text}
         style={styles.textInput}
       />
+      <View>
+        {images.map(image => (
+          <Image
+            key={image}
+            style={styles.image}
+            source={{
+              uri: image,
+            }}
+          />
+        ))}
+      </View>
       <View style={styles.buttons}>
         <TouchableOpacity onPress={addPhotos}>
           <View style={styles.buttonContainer}>
@@ -127,5 +140,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: 'hsl(240, 100%, 70%)',
     padding: 5,
+  },
+  image: {
+    width: 20,
+    height: 20,
   },
 });
